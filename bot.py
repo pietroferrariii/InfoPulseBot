@@ -82,7 +82,15 @@ def generate_daily_pdf():
 # === TELEGRAM COMMANDS ===
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Ciao! Sono InfoPulseBot 🧠\n\nUsa /oggi per ricevere la rassegna completa in PDF oppure /info per tutti i comandi disponibili."
+        "👋 Ciao! Sono *InfoPulseBot*, la tua rassegna quotidiana automatica 📩\n\n"
+        "📌 Ecco cosa puoi fare:\n"
+        "🗞️ /oggi – Ricevi la rassegna completa in PDF\n"
+        "🔬 /tech – Solo Innovazioni e Tecnologie\n"
+        "🌍 /mondo – Notizie dal Mondo (politica, guerra, geopolitica)\n"
+        "🇮🇹 /italia – Notizie dall’Italia\n"
+        "ℹ️ /info – Come funziona il bot\n\n"
+        "Buona lettura! 🧠",
+        parse_mode='Markdown'
     )
 
 async def info(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -96,16 +104,16 @@ async def oggi(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_document(document=InputFile(pdf), filename=os.path.basename(pdf_path))
 
 async def tech(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    tech = get_tech_news().replace('<a ', '[').replace('</a>', '').replace(" href=", "](").replace(">", ")")
-    await update.message.reply_text(f"🔬 *Innovazioni e Tecnologie:*\n{tech}", parse_mode='Markdown')
+    tech = get_tech_news()
+    await update.message.reply_text(f"🔬 *Innovazioni e Tecnologie:*\n{tech}", parse_mode='HTML')
 
 async def mondo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    world = get_world_news().replace('<a ', '[').replace('</a>', '').replace(" href=", "](").replace(">", ")")
-    await update.message.reply_text(f"🌍 *Politica Globale:*\n{world}", parse_mode='Markdown')
+    world = get_world_news()
+    await update.message.reply_text(f"🌍 *Politica Globale:*\n{world}", parse_mode='HTML')
 
 async def italia(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    italy = get_italy_news().replace('<a ', '[').replace('</a>', '').replace(" href=", "](").replace(">", ")")
-    await update.message.reply_text(f"🇮🇹 *Italia:*\n{italy}", parse_mode='Markdown')
+    italy = get_italy_news()
+    await update.message.reply_text(f"🇮🇹 *Italia:*\n{italy}", parse_mode='HTML')
 
 # === MAIN ===
 if __name__ == '__main__':
